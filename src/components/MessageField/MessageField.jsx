@@ -1,4 +1,3 @@
-import React from 'react';
 import MessageComponent from '../MessageComponent/MessageComponent'
 import './MessageField.css';
 import { useRef } from 'react'

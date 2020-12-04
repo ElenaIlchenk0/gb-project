@@ -1,4 +1,3 @@
-import React from 'react';
 import './MessageComponent.css';
 
 const MessageComponent = (props) => {

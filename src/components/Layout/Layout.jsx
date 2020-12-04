@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import MessageField from '../MessageField/MessageField'
 import Button from '../Button/Button'
 import './Layout.css';
