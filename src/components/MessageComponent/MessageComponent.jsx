@@ -1,7 +1,7 @@
 import './MessageComponent.css';
 
-const MessageComponent = (props) => {
-  return <div className="MessageComponent">{props.text}</div>;
+const MessageComponent = ({ text }) => {
+  return <div className="MessageComponent">{text}</div>;
 };
 
 export default MessageComponent;

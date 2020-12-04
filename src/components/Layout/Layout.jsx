@@ -4,12 +4,10 @@ import Button from '../Button/Button';
 import './Layout.css';
 
 class Layout extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messages: ['Привет', 'Как дела?'],
-    };
-  }
+  state = {
+    messages: ['Привет', 'Как дела?'],
+  };
+
 
   sendHandler = (msg) => {
     this.setState({
