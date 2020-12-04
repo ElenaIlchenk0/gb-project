@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import MessageField from '../MessageField/MessageField';
 import Button from '../Button/Button';
 import './Layout.css';
@@ -7,7 +7,6 @@ class Layout extends Component {
   state = {
     messages: ['Привет', 'Как дела?'],
   };
-
 
   sendHandler = (msg) => {
     this.setState({
