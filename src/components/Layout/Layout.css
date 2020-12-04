@@ -1,0 +1,10 @@
+.Layout {
+    max-width: 1240px;
+    padding: 50px 20px;
+    margin: 0 auto;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
