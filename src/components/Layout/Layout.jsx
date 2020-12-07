@@ -5,12 +5,28 @@ import './Layout.css';
 
 class Layout extends Component {
   state = {
-    messages: ['Привет', 'Как дела?'],
+    messages: [
+      {
+        text: 'Привет',
+        sender: 'me',
+      },
+    ],
   };
 
-  sendHandler = (msg) => {
+  componentDidUpdate() {
+    setTimeout(() =>
+      {
+        if (this.state.messages[this.state.messages.length-1].sender !== 'bot') {
+          this.setState(
+              { messages: [ ...this.state.messages, {text:'Я робот!', sender:'bot'} ] })
+        }
+      }, 1000
+    );
+  }
+
+  sendHandler = (msg, sender) => {
     this.setState({
-      messages: [...this.state.messages, msg],
+      messages: [...this.state.messages, {text:msg, sender:sender}],
     });
   };
 

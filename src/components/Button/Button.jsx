@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import './Button.css';
 
 const Button = (props) => {
-  const clickHandler = useCallback(() => props.onClickHandler('Хорошо'), [props]);
+  const clickHandler = useCallback(() => props.onClickHandler('Как дела', 'me'), [props]);
 
   return (
     <button className="Button" onClick={clickHandler}>

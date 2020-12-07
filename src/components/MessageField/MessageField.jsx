@@ -12,7 +12,7 @@ const MessageField = (props) => {
   return (
     <div ref={fieldRef} className="MessageField">
       {props.messages.map((message, i) => (
-        <MessageComponent text={message} key={i} />
+        <MessageComponent text={message.text} sender={message.sender} key={i} />
       ))}
     </div>
   );
