@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
 import MessageField from '../MessageField/MessageField'
-import Button from '../Button/Button'
+import ChatInput from '../ChatInput/ChatInput'
 import './Layout.css'
 
 class Layout extends Component {
-  state = {
-    messages: [
-      {
-        text: 'Привет',
-        sender: 'me',
-      },
-    ],
+  constructor(props) {
+    super(props)
+    this.state = {
+      messages: [
+        {
+          text: 'Привет',
+          sender: 'me',
+        },
+      ],
+    }
+    this.timerBot = null
   }
 
   componentDidUpdate() {
-    setTimeout(() => {
+    this.timerBot = setTimeout(() => {
       if (
         this.state.messages[this.state.messages.length - 1].sender !== 'bot'
       ) {
@@ -28,6 +32,10 @@ class Layout extends Component {
     }, 1000)
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timerBot)
+  }
+
   sendHandler = (msg, sender) => {
     this.setState({
       messages: [...this.state.messages, { text: msg, sender: sender }],
@@ -38,7 +46,7 @@ class Layout extends Component {
     return (
       <div className="Layout">
         <MessageField messages={this.state.messages} />
-        <Button text="Отправить" onClickHandler={this.sendHandler} />
+        <ChatInput text="Отправить" onClickHandler={this.sendHandler} />
       </div>
     )
   }

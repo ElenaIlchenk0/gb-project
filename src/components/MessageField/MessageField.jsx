@@ -1,8 +1,8 @@
+import React, { useRef, useEffect } from 'react'
 import MessageComponent from '../MessageComponent/MessageComponent'
 import './MessageField.css'
-import React, { useRef, useEffect } from 'react'
 
-const MessageField = props => {
+const MessageField = (props) => {
   const fieldRef = useRef(null)
 
   useEffect(() => {
