@@ -1,21 +1,38 @@
-import { Component } from 'react';
-import MessageField from '../MessageField/MessageField';
-import Button from '../Button/Button';
-import './Layout.css';
+import React, { Component } from 'react'
+import MessageField from '../MessageField/MessageField'
+import Button from '../Button/Button'
+import './Layout.css'
 
 class Layout extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messages: ['Привет', 'Как дела?'],
-    };
+  state = {
+    messages: [
+      {
+        text: 'Привет',
+        sender: 'me',
+      },
+    ],
   }
 
-  sendHandler = (msg) => {
+  componentDidUpdate() {
+    setTimeout(() => {
+      if (
+        this.state.messages[this.state.messages.length - 1].sender !== 'bot'
+      ) {
+        this.setState({
+          messages: [
+            ...this.state.messages,
+            { text: 'Я робот!', sender: 'bot' },
+          ],
+        })
+      }
+    }, 1000)
+  }
+
+  sendHandler = (msg, sender) => {
     this.setState({
-      messages: [...this.state.messages, msg],
-    });
-  };
+      messages: [...this.state.messages, { text: msg, sender: sender }],
+    })
+  }
 
   render() {
     return (
@@ -23,8 +40,8 @@ class Layout extends Component {
         <MessageField messages={this.state.messages} />
         <Button text="Отправить" onClickHandler={this.sendHandler} />
       </div>
-    );
+    )
   }
 }
 
-export default Layout;
+export default Layout

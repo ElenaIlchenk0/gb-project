@@ -1,19 +1,22 @@
-import MessageComponent from '../MessageComponent/MessageComponent';
-import './MessageField.css';
-import { useRef } from 'react';
+import MessageComponent from '../MessageComponent/MessageComponent'
+import './MessageField.css'
+import React, { useRef, useEffect } from 'react'
 
-const MessageField = (props) => {
-  const fieldRef = useRef(null);
+const MessageField = props => {
+  const fieldRef = useRef(null)
 
-  fieldRef.current && (fieldRef.current.scrollTop = fieldRef.current.scrollHeight);
+  useEffect(() => {
+    if (fieldRef.current)
+      fieldRef.current.scrollTop = fieldRef.current.scrollHeight
+  }, [props.messages])
 
   return (
     <div ref={fieldRef} className="MessageField">
       {props.messages.map((message, i) => (
-        <MessageComponent text={message} key={i} />
+        <MessageComponent text={message.text} sender={message.sender} key={i} />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default MessageField;
+export default MessageField

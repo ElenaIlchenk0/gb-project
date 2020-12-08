@@ -1,7 +1,18 @@
-import './MessageComponent.css';
+import React from 'react'
+import './MessageComponent.css'
 
-const MessageComponent = (props) => {
-  return <div className="MessageComponent">{props.text}</div>;
-};
+const MessageComponent = ({ text, sender }) => {
+  const cls = []
+  if (sender === 'me') {
+    cls.push('selfMessage')
+  }
 
-export default MessageComponent;
+  return (
+    <div className={`MessageComponent ${cls.join(' ')}`}>
+      <div className="sender">{`${sender}:`}</div>
+      <div className="text">{text}</div>
+    </div>
+  )
+}
+
+export default MessageComponent

@@ -1,7 +1,16 @@
 .MessageComponent {
-    width: 45%;
+    width: 55%;
     padding: 10px 20px;
     border-radius: 10px;
     border: thin solid #20baaa;
-    margin: 20px 0;
+    margin: 10px 0;
+}
+.sender {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+}
+.selfMessage {
+    align-self: flex-end;
+    border: thin solid #18988b;
 }
