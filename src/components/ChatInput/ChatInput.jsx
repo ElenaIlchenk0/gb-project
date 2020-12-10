@@ -1,4 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
+import Fab from '@material-ui/core/Fab'
+import SendIcon from '@material-ui/icons/Send'
 import './ChatInput.css'
 
 const ChatInput = (props) => {
@@ -35,9 +37,14 @@ const ChatInput = (props) => {
         onKeyPress={onKeyPressHandler}
         value={inputVal}
       />
-      <button className="button" onClick={clickHandler}>
-        {props.text}
-      </button>
+      <Fab
+        style={{ backgroundColor: '#21A089', color: 'white' }}
+        className="button"
+        aria-label="send"
+        onClick={clickHandler}
+      >
+        <SendIcon />
+      </Fab>
     </div>
   )
 }

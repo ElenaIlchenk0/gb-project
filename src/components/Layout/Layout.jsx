@@ -1,20 +1,32 @@
 import React, { Component } from 'react'
+import Header from '../Header/Header'
+import ChatList from '../ChatList/ChatList'
 import MessageField from '../MessageField/MessageField'
 import ChatInput from '../ChatInput/ChatInput'
 import './Layout.css'
 
 class Layout extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      messages: [
-        {
-          text: 'Привет',
-          sender: 'me',
-        },
-      ],
-    }
-    this.timerBot = null
+  state = {
+    messages: [
+      {
+        text: 'Привет',
+        sender: 'me',
+      },
+    ],
+    chatList: [
+      {
+        name: 'Chat1',
+        id: 1,
+      },
+      {
+        name: 'Chat2',
+        id: 2,
+      },
+      {
+        name: 'Chat3',
+        id: 3,
+      },
+    ],
   }
 
   componentDidUpdate() {
@@ -45,8 +57,14 @@ class Layout extends Component {
   render() {
     return (
       <div className="Layout">
-        <MessageField messages={this.state.messages} />
-        <ChatInput text="Отправить" onClickHandler={this.sendHandler} />
+        <Header />
+        <div className="main">
+          <ChatList chats={this.state.chatList} />
+          <div className="chatField">
+            <MessageField messages={this.state.messages} />
+            <ChatInput onClickHandler={this.sendHandler} />
+          </div>
+        </div>
       </div>
     )
   }
