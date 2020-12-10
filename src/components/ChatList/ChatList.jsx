@@ -30,6 +30,7 @@ export default function SelectedListItem(props) {
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
+    props.chatHandler(index)
   }
 
   return (
@@ -41,6 +42,7 @@ export default function SelectedListItem(props) {
             button
             selected={selectedIndex === chat.id}
             onClick={(event) => handleListItemClick(event, chat.id)}
+            key={chat.id}
           >
             <ListItemIcon>
               <ChatIcon className={classes.iconItem} />

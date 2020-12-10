@@ -4,7 +4,7 @@ import './Header.css'
 const Header = (props) => {
   return (
     <div className="Header">
-      <h1>Welcome</h1>
+      <h1>{props.activeChat}</h1>
     </div>
   )
 }
