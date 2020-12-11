@@ -3,9 +3,9 @@ import MessageComponent from '../MessageComponent/MessageComponent'
 import ChatInput from '../ChatInput/ChatInput'
 import './MessageField.css'
 
-const MessageField = (props) => {
+const MessageField = props => {
   const fieldRef = useRef(null)
-  const [msg, setMsg] = useState([
+  const [msgs, setMsgs] = useState([
     {
       text: 'Привет',
       sender: 'me',
@@ -16,25 +16,25 @@ const MessageField = (props) => {
     if (fieldRef.current)
       fieldRef.current.scrollTop = fieldRef.current.scrollHeight
 
-    let timerBot = setTimeout(() => {
-      if (msg[msg.length - 1].sender !== 'bot') {
-        setMsg([...msg, { text: 'Я робот!', sender: 'bot' }])
+    const timerBot = setTimeout(() => {
+      if (msgs[msgs.length - 1].sender !== 'bot') {
+        setMsgs([...msgs, { text: 'Я робот!', sender: 'bot' }])
       }
     }, 1000)
 
     return () => {
       clearTimeout(timerBot)
     }
-  }, [msg])
+  }, [msgs])
 
   const sendHandler = (text, sender) => {
-    setMsg([...msg, { text, sender }])
+    setMsgs([...msgs, { text, sender }])
   }
 
   return (
     <div className="chatField">
       <div ref={fieldRef} className="MessageField">
-        {msg.map((message, i) => (
+        {msgs.map((message, i) => (
           <MessageComponent
             text={message.text}
             sender={message.sender}
