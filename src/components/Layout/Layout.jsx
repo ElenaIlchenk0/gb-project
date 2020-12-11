@@ -1,44 +1,47 @@
 import React, { Component } from 'react'
+import Header from '../Header/Header'
+import ChatList from '../ChatList/ChatList'
 import MessageField from '../MessageField/MessageField'
-import Button from '../Button/Button'
 import './Layout.css'
 
 class Layout extends Component {
   state = {
-    messages: [
+    chatList: [
       {
-        text: 'Привет',
-        sender: 'me',
+        name: 'Chat1',
+        id: 1,
+      },
+      {
+        name: 'Chat2',
+        id: 2,
+      },
+      {
+        name: 'Chat3',
+        id: 3,
       },
     ],
+    activeChat: 1,
   }
 
-  componentDidUpdate() {
-    setTimeout(() => {
-      if (
-        this.state.messages[this.state.messages.length - 1].sender !== 'bot'
-      ) {
-        this.setState({
-          messages: [
-            ...this.state.messages,
-            { text: 'Я робот!', sender: 'bot' },
-          ],
-        })
-      }
-    }, 1000)
-  }
-
-  sendHandler = (msg, sender) => {
+  setActiveChat = (i) => {
     this.setState({
-      messages: [...this.state.messages, { text: msg, sender: sender }],
+      activeChat: i,
     })
   }
 
   render() {
     return (
       <div className="Layout">
-        <MessageField messages={this.state.messages} />
-        <Button text="Отправить" onClickHandler={this.sendHandler} />
+        <Header
+          activeChat={this.state.chatList[this.state.activeChat - 1].name}
+        />
+        <div className="main">
+          <ChatList
+            chats={this.state.chatList}
+            chatHandler={this.setActiveChat}
+          />
+          <MessageField />
+        </div>
       </div>
     )
   }
