@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -37,18 +38,19 @@ export default function SelectedListItem(props) {
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
         {props.chats.map((chat) => (
-          <ListItem
-            className={classes.listItem}
-            button
-            selected={selectedIndex === chat.id}
-            onClick={(event) => handleListItemClick(event, chat.id)}
-            key={chat.id}
-          >
-            <ListItemIcon>
-              <ChatIcon className={classes.iconItem} />
-            </ListItemIcon>
-            <ListItemText primary={chat.name} />
-          </ListItem>
+          <Link to={`/chat/${chat.id}/`} key={chat.id}>
+            <ListItem
+              className={classes.listItem}
+              button
+              selected={selectedIndex === chat.id}
+              onClick={(event) => handleListItemClick(event, chat.id)}
+            >
+              <ListItemIcon>
+                <ChatIcon className={classes.iconItem} />
+              </ListItemIcon>
+              <ListItemText primary={chat.name} />
+            </ListItem>
+          </Link>
         ))}
       </List>
     </div>

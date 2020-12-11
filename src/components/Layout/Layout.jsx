@@ -5,22 +5,11 @@ import MessageField from '../MessageField/MessageField'
 import './Layout.css'
 
 class Layout extends Component {
-  state = {
-    chatList: [
-      {
-        name: 'Chat1',
-        id: 1,
-      },
-      {
-        name: 'Chat2',
-        id: 2,
-      },
-      {
-        name: 'Chat3',
-        id: 3,
-      },
-    ],
-    activeChat: 1,
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeChat: 1,
+    }
   }
 
   setActiveChat = (i) => {
@@ -33,11 +22,11 @@ class Layout extends Component {
     return (
       <div className="Layout">
         <Header
-          activeChat={this.state.chatList[this.state.activeChat - 1].name}
+          activeChat={this.props.chatList[this.state.activeChat - 1].name}
         />
         <div className="main">
           <ChatList
-            chats={this.state.chatList}
+            chats={this.props.chatList}
             chatHandler={this.setActiveChat}
           />
           <MessageField />
