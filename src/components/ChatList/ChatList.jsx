@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectedListItem(props) {
   const classes = useStyles()
-  const [selectedIndex, setSelectedIndex] = React.useState(1)
+  const [selectedIndex, setSelectedIndex] = React.useState(props.activeChat)
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
     props.chatHandler(index)
   }
-
+  console.log(selectedIndex)
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">

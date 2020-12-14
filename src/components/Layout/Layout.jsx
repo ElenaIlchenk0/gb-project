@@ -8,7 +8,21 @@ class Layout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeChat: 1,
+      chatList: [
+        {
+          name: 'Chat1',
+          id: 1,
+        },
+        {
+          name: 'Chat2',
+          id: 2,
+        },
+        {
+          name: 'Chat3',
+          id: 3,
+        },
+      ],
+      activeChat: +this.props.match.params.id,
     }
   }
 
@@ -18,18 +32,30 @@ class Layout extends Component {
     })
   }
 
+  setActiveChatName = () => {
+    if (this.state.chatList.length >= this.state.activeChat) {
+      return this.state.chatList[this.state.activeChat - 1].name
+    } else if (this.state.chatList.length < this.state.activeChat) {
+      return 'Нет такого чата'
+    } else return 'Welcome'
+  }
+
   render() {
     return (
       <div className="Layout">
-        <Header
-          activeChat={this.props.chatList[this.state.activeChat - 1].name}
-        />
+        <Header chatName={this.setActiveChatName()} />
         <div className="main">
           <ChatList
-            chats={this.props.chatList}
+            chats={this.state.chatList}
             chatHandler={this.setActiveChat}
+            activeChat={this.state.activeChat}
           />
-          <MessageField />
+          {!!this.state.activeChat &&
+          this.state.chatList.length >= this.state.activeChat ? (
+            <MessageField />
+          ) : (
+            <h2 style={{ color: '#065032' }}>Выберите чат из списка</h2>
+          )}
         </div>
       </div>
     )
