@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ChatIcon from '@material-ui/icons/Chat'
+import ChatDialog from '../ChatDialog/ChatDialog'
 import './ChatList.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -33,26 +34,39 @@ export default function SelectedListItem(props) {
     setSelectedIndex(index)
     props.chatHandler(index)
   }
-  console.log(selectedIndex)
+
+  let list = []
+  const chatrender = () => {
+    for (let id in props.chats) {
+      list.push(
+        <Link to={`/chat/${id}/`} key={id}>
+          <ListItem
+            className={classes.listItem}
+            button
+            selected={selectedIndex === id}
+            onClick={(event) => handleListItemClick(event, id)}
+          >
+            <ListItemIcon>
+              <ChatIcon className={classes.iconItem} />
+            </ListItemIcon>
+            <ListItemText primary={props.chats[id].name} />
+          </ListItem>
+        </Link>
+      )
+    }
+    return list
+  }
+
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        {props.chats.map((chat) => (
-          <Link to={`/chat/${chat.id}/`} key={chat.id}>
-            <ListItem
-              className={classes.listItem}
-              button
-              selected={selectedIndex === chat.id}
-              onClick={(event) => handleListItemClick(event, chat.id)}
-            >
-              <ListItemIcon>
-                <ChatIcon className={classes.iconItem} />
-              </ListItemIcon>
-              <ListItemText primary={chat.name} />
-            </ListItem>
-          </Link>
-        ))}
+        {chatrender()}
       </List>
+      <ChatDialog
+        contacts={props.contacts}
+        addChat={props.addChat}
+        chats={props.chats}
+      />
     </div>
   )
 }
