@@ -8,14 +8,14 @@ const Header = (props) => {
   return (
     <div className="Header">
       <h1>{props.profile ? 'Profile' : props.chatName}</h1>
-      <Link className="profileLink" to={`/profile`}>
+      <Link className="profileLink" to="/profile">
         <div className="profileIcon">
           <span>User's profile</span>
           <PersonIcon style={{ color: '#065032' }} fontSize="large" />
         </div>
       </Link>
 
-      <Profile isOpen={props.profile} activeChat={props.activeChat} />
+      <Profile isOpen={props.profile} />
     </div>
   )
 }

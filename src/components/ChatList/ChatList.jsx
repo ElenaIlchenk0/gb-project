@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addChat } from '../../store/actions/chatActions'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List'
@@ -17,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     padding: '0 20px',
     boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   listItem: {
     color: '#065032',
@@ -27,17 +32,27 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SelectedListItem(props) {
+  const dispatch = useDispatch()
+  const chats = useSelector((state) => state.chatReducer.chatList)
+
   const classes = useStyles()
   const [selectedIndex, setSelectedIndex] = React.useState(props.activeChat)
+
+  const addNewChat = useCallback(
+    (title) => {
+      dispatch(addChat(title))
+    },
+    [dispatch]
+  )
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
     props.chatHandler(index)
   }
 
-  let list = []
+  const list = []
   const chatrender = () => {
-    for (let id in props.chats) {
+    for (let id in chats) {
       list.push(
         <Link to={`/chat/${id}/`} key={id}>
           <ListItem
@@ -49,7 +64,7 @@ export default function SelectedListItem(props) {
             <ListItemIcon>
               <ChatIcon className={classes.iconItem} />
             </ListItemIcon>
-            <ListItemText primary={props.chats[id].name} />
+            <ListItemText primary={chats[id].name} />
           </ListItem>
         </Link>
       )
@@ -62,11 +77,7 @@ export default function SelectedListItem(props) {
       <List component="nav" aria-label="main mailbox folders">
         {chatrender()}
       </List>
-      <ChatDialog
-        contacts={props.contacts}
-        addChat={props.addChat}
-        chats={props.chats}
-      />
+      <ChatDialog contacts={props.contacts} addChat={addNewChat} />
     </div>
   )
 }

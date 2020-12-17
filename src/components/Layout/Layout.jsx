@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import connect from 'react-redux/es/connect/connect'
 import Header from '../Header/Header'
 import ChatList from '../ChatList/ChatList'
 import MessageField from '../MessageField/MessageField'
@@ -8,16 +9,6 @@ class Layout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      msgs: {
-        1: { text: 'Привет!', sender: 'bot' },
-        2: { text: 'Здравствуйте!', sender: 'bot' },
-        3: { text: 'Hi!', sender: 'bot' },
-      },
-      chatList: {
-        1: { name: 'Чат 1', messageList: [1] },
-        2: { name: 'Чат 2', messageList: [2] },
-        3: { name: 'Чат 3', messageList: [3] },
-      },
       contactList: ['Alexandra', 'Den', 'Filipp'],
       activeChat:
         this.props.match && this.props.match.params
@@ -27,38 +18,21 @@ class Layout extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.timerBot = setTimeout(() => {
-      if (
-        Object.keys(prevState.msgs).length <
-          Object.keys(this.state.msgs).length &&
-        Object.values(this.state.msgs)[
-          Object.values(this.state.msgs).length - 1
-        ].sender !== 'bot'
-      ) {
-        this.sendHandler('Я бот!', 'bot')
-      }
-    }, 1000)
+    // this.timerBot = setTimeout(() => {
+    //   if (
+    //     Object.keys(prevProps.msgs).length <
+    //       Object.keys(this.props.msgs).length &&
+    //     Object.values(this.props.msgs)[
+    //       Object.values(this.props.msgs).length - 1
+    //     ].sender !== 'bot'
+    //   ) {
+    //     this.sendHandler('Я бот!', 'bot')
+    //   }
+    // }, 1000)
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timerBot)
-  }
-
-  sendHandler = (text, sender) => {
-    const { msgs, chatList, activeChat } = this.state
-
-    const messageId = Object.keys(msgs).length + 1
-
-    this.setState({
-      msgs: { ...msgs, [messageId]: { text, sender } },
-      chatList: {
-        ...chatList,
-        [activeChat]: {
-          ...chatList[activeChat],
-          messageList: [...chatList[activeChat]['messageList'], messageId],
-        },
-      },
-    })
+    // clearTimeout(this.timerBot)
   }
 
   setActiveChat = (i) => {
@@ -68,24 +42,14 @@ class Layout extends Component {
   }
 
   setActiveChatName = () => {
-    const { chatList, activeChat } = this.state
+    const { activeChat } = this.state
+    const { chats } = this.props
 
-    if (Object.keys(chatList).length >= activeChat) {
-      return Object.values(chatList)[activeChat - 1].name
-    } else if (Object.keys(chatList).length < activeChat) {
+    if (Object.keys(chats).length >= activeChat) {
+      return Object.values(chats)[activeChat - 1].name
+    } else if (Object.keys(chats).length < activeChat) {
       return 'Нет такого чата'
     } else return 'Welcome'
-  }
-
-  addChat = (title) => {
-    const { chatList } = this.state
-
-    this.setState({
-      chatList: {
-        ...chatList,
-        [Object.keys(chatList).length + 1]: { name: title, messageList: [] },
-      },
-    })
   }
 
   render() {
@@ -94,24 +58,16 @@ class Layout extends Component {
         <Header
           chatName={this.setActiveChatName()}
           profile={this.props.isProfile}
-          activeChat={this.state.activeChat}
         />
         <div className="main">
           <ChatList
-            chats={this.state.chatList}
             contacts={this.state.contactList}
             chatHandler={this.setActiveChat}
             activeChat={this.state.activeChat}
-            addChat={this.addChat}
           />
           {!!this.state.activeChat &&
-          Object.keys(this.state.chatList).length >= this.state.activeChat ? (
-            <MessageField
-              msgs={this.state.msgs}
-              chats={this.state.chatList}
-              activeChat={this.state.activeChat}
-              send={this.sendHandler}
-            />
+          Object.keys(this.props.chats).length >= this.state.activeChat ? (
+            <MessageField activeChat={this.state.activeChat} />
           ) : (
             <h2 style={{ color: '#065032' }}>Выберите чат из списка</h2>
           )}
@@ -121,4 +77,8 @@ class Layout extends Component {
   }
 }
 
-export default Layout
+const mapStateToProps = ({ chatReducer, msgReducer }) => ({
+  chats: chatReducer.chatList,
+})
+
+export default connect(mapStateToProps)(Layout)

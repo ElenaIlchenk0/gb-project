@@ -81,7 +81,7 @@ export default function SimpleDialogDemo(props) {
     <div style={{ textAlign: 'center' }}>
       <Button
         style={{
-          margin: '20px 0',
+          margin: '30px 0',
           color: '#0c4a48',
           border: '1px solid #0c4a48',
         }}

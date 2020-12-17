@@ -12,4 +12,6 @@
 .profileLink, .profileIcon {
     display: flex;
     align-items: center;
+    color: #333;
+    text-decoration: none;
 }

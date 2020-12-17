@@ -1,15 +1,20 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 import './Profile.css'
 
 const Profile = (props) => {
+  let history = useHistory()
+  const onClickHandler = useCallback(() => {
+    history.goBack()
+  }, [history])
+
   return (
     <div className={`Profile ${props.isOpen ? 'open' : ''}`}>
       PROFILE
       <br />
-      <Link to={props.activeChat ? `/chat/${props.activeChat}` : '/'}>
-        <button className="close-profile">Close</button>
-      </Link>
+      <button className="close-profile" onClick={onClickHandler}>
+        Close
+      </button>
     </div>
   )
 }
