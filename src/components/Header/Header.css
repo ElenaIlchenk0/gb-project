@@ -6,4 +6,10 @@
     border-radius: 5px;
     box-sizing: border-box;
     color: #065032;
+    display: flex;
+    justify-content: space-between;
+}
+.profileLink, .profileIcon {
+    display: flex;
+    align-items: center;
 }

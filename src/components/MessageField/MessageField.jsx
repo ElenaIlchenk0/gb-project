@@ -1,48 +1,35 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import MessageComponent from '../MessageComponent/MessageComponent'
 import ChatInput from '../ChatInput/ChatInput'
 import './MessageField.css'
 
 const MessageField = (props) => {
   const fieldRef = useRef(null)
-  const [msg, setMsg] = useState([
-    {
-      text: 'Привет',
-      sender: 'me',
-    },
-  ])
 
   useEffect(() => {
-    if (fieldRef.current)
+    if (fieldRef.current) {
       fieldRef.current.scrollTop = fieldRef.current.scrollHeight
-
-    let timerBot = setTimeout(() => {
-      if (msg[msg.length - 1].sender !== 'bot') {
-        setMsg([...msg, { text: 'Я робот!', sender: 'bot' }])
-      }
-    }, 1000)
-
-    return () => {
-      clearTimeout(timerBot)
     }
-  }, [msg])
+  }, [props.msgs])
 
-  const sendHandler = (text, sender) => {
-    setMsg([...msg, { text, sender }])
+  const renderMsgs = () => {
+    const { msgs, chats, activeChat } = props
+
+    return chats[activeChat].messageList.map((messageId, index) => (
+      <MessageComponent
+        key={index}
+        text={msgs[messageId].text}
+        sender={msgs[messageId].sender}
+      />
+    ))
   }
 
   return (
     <div className="chatField">
       <div ref={fieldRef} className="MessageField">
-        {msg.map((message, i) => (
-          <MessageComponent
-            text={message.text}
-            sender={message.sender}
-            key={i}
-          />
-        ))}
+        {renderMsgs()}
       </div>
-      <ChatInput onClickHandler={sendHandler} />
+      <ChatInput onClickHandler={props.send} />
     </div>
   )
 }

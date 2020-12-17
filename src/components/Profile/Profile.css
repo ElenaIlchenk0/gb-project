@@ -1,0 +1,14 @@
+.Profile {
+    width: 30%;
+    height: calc(100vh - 100px);
+    position: absolute;
+    background: #eee;
+    right: -1000px;
+    border-radius: 5px;
+    z-index: 99;
+    transition: right 1s ease;
+}
+
+.open {
+    right: 0px;
+}

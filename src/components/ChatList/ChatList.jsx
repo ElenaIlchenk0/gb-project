@@ -1,10 +1,12 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ChatIcon from '@material-ui/icons/Chat'
+import ChatDialog from '../ChatDialog/ChatDialog'
 import './ChatList.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -26,31 +28,45 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectedListItem(props) {
   const classes = useStyles()
-  const [selectedIndex, setSelectedIndex] = React.useState(1)
+  const [selectedIndex, setSelectedIndex] = React.useState(props.activeChat)
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
     props.chatHandler(index)
   }
 
-  return (
-    <div className={classes.root}>
-      <List component="nav" aria-label="main mailbox folders">
-        {props.chats.map((chat) => (
+  let list = []
+  const chatrender = () => {
+    for (let id in props.chats) {
+      list.push(
+        <Link to={`/chat/${id}/`} key={id}>
           <ListItem
             className={classes.listItem}
             button
-            selected={selectedIndex === chat.id}
-            onClick={(event) => handleListItemClick(event, chat.id)}
-            key={chat.id}
+            selected={selectedIndex === id}
+            onClick={(event) => handleListItemClick(event, id)}
           >
             <ListItemIcon>
               <ChatIcon className={classes.iconItem} />
             </ListItemIcon>
-            <ListItemText primary={chat.name} />
+            <ListItemText primary={props.chats[id].name} />
           </ListItem>
-        ))}
+        </Link>
+      )
+    }
+    return list
+  }
+
+  return (
+    <div className={classes.root}>
+      <List component="nav" aria-label="main mailbox folders">
+        {chatrender()}
       </List>
+      <ChatDialog
+        contacts={props.contacts}
+        addChat={props.addChat}
+        chats={props.chats}
+      />
     </div>
   )
 }
