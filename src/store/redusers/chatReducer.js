@@ -8,6 +8,7 @@ const initialStore = {
     2: { name: 'Чат 2', messageList: [2] },
     3: { name: 'Чат 3', messageList: [3] },
   },
+  contactList: ['Alexandra', 'Den', 'Filipp'],
 }
 
 export default function chatReducer(store = initialStore, action) {

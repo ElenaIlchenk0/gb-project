@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SelectedListItem(props) {
   const dispatch = useDispatch()
   const chats = useSelector((state) => state.chatReducer.chatList)
+  const contacts = useSelector((state) => state.chatReducer.contactList)
 
   const classes = useStyles()
   const [selectedIndex, setSelectedIndex] = React.useState(props.activeChat)
@@ -77,7 +78,7 @@ export default function SelectedListItem(props) {
       <List component="nav" aria-label="main mailbox folders">
         {chatrender()}
       </List>
-      <ChatDialog contacts={props.contacts} addChat={addNewChat} />
+      <ChatDialog contacts={contacts} addChat={addNewChat} />
     </div>
   )
 }

@@ -9,7 +9,6 @@ class Layout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      contactList: ['Alexandra', 'Den', 'Filipp'],
       activeChat:
         this.props.match && this.props.match.params
           ? this.props.match.params.id
@@ -61,7 +60,6 @@ class Layout extends Component {
         />
         <div className="main">
           <ChatList
-            contacts={this.state.contactList}
             chatHandler={this.setActiveChat}
             activeChat={this.state.activeChat}
           />
