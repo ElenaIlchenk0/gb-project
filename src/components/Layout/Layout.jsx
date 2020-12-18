@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
-import connect from 'react-redux/es/connect/connect'
+import { connect } from 'react-redux'
 import Header from '../Header/Header'
 import ChatList from '../ChatList/ChatList'
 import MessageField from '../MessageField/MessageField'
 import './Layout.css'
 
 class Layout extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      activeChat:
-        this.props.match && this.props.match.params
-          ? this.props.match.params.id
-          : {},
-    }
+  state = {
+    activeChat:
+      this.props.match && this.props.match.params
+        ? this.props.match.params.id
+        : {},
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -63,8 +60,7 @@ class Layout extends Component {
             chatHandler={this.setActiveChat}
             activeChat={this.state.activeChat}
           />
-          {!!this.state.activeChat &&
-          Object.keys(this.props.chats).length >= this.state.activeChat ? (
+          {this.props.chats[this.state.activeChat] ? (
             <MessageField activeChat={this.state.activeChat} />
           ) : (
             <h2 style={{ color: '#065032' }}>Выберите чат из списка</h2>
@@ -75,7 +71,7 @@ class Layout extends Component {
   }
 }
 
-const mapStateToProps = ({ chatReducer, msgReducer }) => ({
+const mapStateToProps = ({ chatReducer }) => ({
   chats: chatReducer.chatList,
 })
 

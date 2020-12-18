@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import './Profile.css'
 
 const Profile = (props) => {
-  let history = useHistory()
+  const history = useHistory()
   const onClickHandler = useCallback(() => {
     history.goBack()
   }, [history])
