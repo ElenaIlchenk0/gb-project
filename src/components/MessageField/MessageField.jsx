@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessage } from '../../store/actions/msgActions';
+import { sendMessage, deleteMsg } from '../../store/actions/msgActions';
 import MessageComponent from '../MessageComponent/MessageComponent';
 import ChatInput from '../ChatInput/ChatInput';
 import './MessageField.css';
@@ -27,6 +27,13 @@ const MessageField = (props) => {
     [dispatch, msgs, props.activeChat]
   );
 
+  const chatClickHandler = useCallback(
+    (id, activeChat) => {
+      dispatch(deleteMsg(id, activeChat));
+    },
+    [dispatch, chats, msgs, props.activeChat]
+  );
+
   const renderMsgs = () => {
     const { activeChat } = props;
 
@@ -35,6 +42,7 @@ const MessageField = (props) => {
         key={index}
         text={msgs[messageId].text}
         sender={msgs[messageId].sender}
+        chatClickHandler={() => chatClickHandler(messageId, props.activeChat)}
       />
     ));
   };

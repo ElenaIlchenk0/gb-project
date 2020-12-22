@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import { SEND_MESSAGE } from '../actions/msgActions';
+import { SEND_MESSAGE, DEL_MESSAGE } from '../actions/msgActions';
 import { ADD_CHAT } from '../actions/chatActions';
 
 const initialStore = {
@@ -13,6 +13,24 @@ const initialStore = {
 
 export default function chatReducer(store = initialStore, action) {
   switch (action.type) {
+    case DEL_MESSAGE: {
+      return update(store, {
+        chatList: {
+          [action.activeChat]: {
+            messageList: {
+              $splice: [
+                [
+                  store.chatList[action.activeChat].messageList.indexOf(
+                    action.id
+                  ),
+                  1,
+                ],
+              ],
+            },
+          },
+        },
+      });
+    }
     case SEND_MESSAGE: {
       return update(store, {
         chatList: {

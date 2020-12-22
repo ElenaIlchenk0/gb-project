@@ -4,6 +4,8 @@
     border-radius: 10px;
     border: thin solid #20baaa;
     margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
 }
 .sender {
     font-size: 12px;
@@ -13,4 +15,8 @@
 .selfMessage {
     align-self: flex-end;
     border: thin solid #18988b;
+}
+.close {
+    color: #065032;
+    cursor: pointer;
 }
