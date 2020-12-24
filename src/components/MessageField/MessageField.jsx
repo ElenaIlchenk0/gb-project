@@ -31,7 +31,7 @@ const MessageField = (props) => {
     (id, activeChat) => {
       dispatch(deleteMsg(id, activeChat));
     },
-    [dispatch, chats, msgs, props.activeChat]
+    [dispatch, chats, msgs]
   );
 
   const renderMsgs = () => {

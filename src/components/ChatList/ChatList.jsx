@@ -50,7 +50,7 @@ export default function SelectedListItem(props) {
     [dispatch]
   );
 
-  const handleListItemClick = (index, chatId) => (dispatch) => {
+  const handleListItemClick = (index, chatId) => {
     setSelectedIndex(index);
     props.chatHandler(index);
 
@@ -65,7 +65,7 @@ export default function SelectedListItem(props) {
           className={classes.listItem}
           button
           selected={selectedIndex === id}
-          onClick={() => handleListItemClick(id, `/chat/${id}/`)(dispatch)}
+          onClick={() => handleListItemClick(id, `/chat/${id}/`)}
           key={id}
         >
           <ListItemIcon>
