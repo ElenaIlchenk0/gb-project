@@ -52,9 +52,13 @@ class Layout extends Component {
           <ChatList
             chatHandler={this.setActiveChat}
             activeChat={this.state.activeChat}
+            user={this.props.user}
           />
           {this.props.chats[this.state.activeChat] ? (
-            <MessageField activeChat={this.state.activeChat} />
+            <MessageField
+              activeChat={this.state.activeChat}
+              user={this.props.user}
+            />
           ) : (
             <h2 style={{ color: '#065032' }}>Выберите чат из списка</h2>
           )}
@@ -66,6 +70,7 @@ class Layout extends Component {
 
 const mapStateToProps = ({ chatReducer }) => ({
   chats: chatReducer.chatList,
+  user: chatReducer.userId,
 });
 
 export default connect(mapStateToProps)(Layout);

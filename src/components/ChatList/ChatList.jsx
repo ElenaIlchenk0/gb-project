@@ -44,10 +44,9 @@ export default function SelectedListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(props.activeChat);
 
   useEffect(() => {
-    const userId = 'u-1';
-    dispatch(loadChats('/api/chats/' + userId));
-    dispatch(loadContacts('/api/contacts/' + userId));
-  }, [dispatch]);
+    dispatch(loadChats('/api/chats/' + props.user));
+    dispatch(loadContacts('/api/contacts/' + props.user));
+  }, [dispatch, props]);
 
   useEffect(() => {
     setSelectedIndex(props.activeChat);

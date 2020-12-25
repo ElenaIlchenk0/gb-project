@@ -13,6 +13,7 @@ const MessageField = (props) => {
   const dispatch = useDispatch();
   const chats = useSelector((state) => state.chatReducer.chatList);
   const msgs = useSelector((state) => state.msgReducer.msgs);
+
   const fieldRef = useRef(null);
 
   useEffect(() => {
@@ -22,9 +23,8 @@ const MessageField = (props) => {
   });
 
   useEffect(() => {
-    const userId = 'u-1';
-    dispatch(loadMsgs('/api/msgs/' + userId));
-  }, [dispatch]);
+    dispatch(loadMsgs('/api/msgs/' + props.user));
+  }, [dispatch, props]);
 
   const sendHandler = useCallback(
     (text, sender) => {
@@ -45,7 +45,6 @@ const MessageField = (props) => {
 
   const renderMsgs = () => {
     const { activeChat } = props;
-    console.log(msgs);
     return chats[activeChat].messageList.map((messageId, index) => (
       <MessageComponent
         key={index}

@@ -1,6 +1,7 @@
 export const ADD_CHAT = '@@chat/ADD_CHAT';
 export const GET_CHATS_SUCCESS = '@@chat/GET_CHATS_SUCCESS';
 export const GET_CONTACTS_SUCCESS = '@@chat/GET_CONTACTS_SUCCESS';
+export const GET_USER = '@@chat/GET_USER';
 
 export const addNewChat = (title) => ({
   type: ADD_CHAT,

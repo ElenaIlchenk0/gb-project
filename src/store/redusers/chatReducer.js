@@ -9,6 +9,7 @@ import {
 const initialStore = {
   chatList: {},
   contactList: [],
+  userId: 'u-1',
 };
 
 export default function chatReducer(store = initialStore, action) {
