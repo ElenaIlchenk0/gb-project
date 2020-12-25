@@ -1,5 +1,5 @@
-import update from 'react-addons-update'
-import { SEND_MESSAGE } from '../actions/msgActions'
+import update from 'react-addons-update';
+import { SEND_MESSAGE, DEL_MESSAGE } from '../actions/msgActions';
 
 const initialStore = {
   msgs: {
@@ -7,10 +7,13 @@ const initialStore = {
     2: { text: 'Здравствуйте!', sender: 'bot' },
     3: { text: 'Hi!', sender: 'bot' },
   },
-}
+};
 
 export default function chatReducer(store = initialStore, action) {
   switch (action.type) {
+    case DEL_MESSAGE: {
+      delete store.msgs[action.id];
+    }
     case SEND_MESSAGE: {
       return update(store, {
         msgs: {
@@ -21,9 +24,9 @@ export default function chatReducer(store = initialStore, action) {
             },
           },
         },
-      })
+      });
     }
     default:
-      return store
+      return store;
   }
 }

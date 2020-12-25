@@ -1,15 +1,26 @@
-import React from 'react'
-import './MessageComponent.css'
+import React, { useState } from 'react';
+import './MessageComponent.css';
 
-const MessageComponent = ({ text, sender }) => {
+const MessageComponent = ({ text, sender, chatClickHandler }) => {
+  const [hide, setHide] = useState(false);
+
   return (
     <div
       className={`MessageComponent ${sender === 'me' ? ' selfMessage' : ''}`}
+      onClick={() => setHide(!hide)}
     >
-      <div className="sender">{`${sender}:`}</div>
-      <div className="text">{text}</div>
-    </div>
-  )
-}
+      <div>
+        <div className="sender">{`${sender}:`}</div>
+        <div className="text">{text}</div>
+      </div>
 
-export default MessageComponent
+      {hide && (
+        <div className="close" onClick={chatClickHandler}>
+          X
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MessageComponent;

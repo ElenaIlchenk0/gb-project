@@ -1,6 +1,6 @@
-import update from 'react-addons-update'
-import { SEND_MESSAGE } from '../actions/msgActions'
-import { ADD_CHAT } from '../actions/chatActions'
+import update from 'react-addons-update';
+import { SEND_MESSAGE, DEL_MESSAGE } from '../actions/msgActions';
+import { ADD_CHAT } from '../actions/chatActions';
 
 const initialStore = {
   chatList: {
@@ -9,10 +9,28 @@ const initialStore = {
     3: { name: 'Чат 3', messageList: [3] },
   },
   contactList: ['Alexandra', 'Den', 'Filipp'],
-}
+};
 
 export default function chatReducer(store = initialStore, action) {
   switch (action.type) {
+    case DEL_MESSAGE: {
+      return update(store, {
+        chatList: {
+          [action.activeChat]: {
+            messageList: {
+              $splice: [
+                [
+                  store.chatList[action.activeChat].messageList.indexOf(
+                    action.id
+                  ),
+                  1,
+                ],
+              ],
+            },
+          },
+        },
+      });
+    }
     case SEND_MESSAGE: {
       return update(store, {
         chatList: {
@@ -26,10 +44,10 @@ export default function chatReducer(store = initialStore, action) {
             },
           },
         },
-      })
+      });
     }
     case ADD_CHAT: {
-      const chatId = Object.keys(store.chatList).length + 1
+      const chatId = Object.keys(store.chatList).length + 1;
       return update(store, {
         chatList: {
           $merge: {
@@ -39,9 +57,9 @@ export default function chatReducer(store = initialStore, action) {
             },
           },
         },
-      })
+      });
     }
     default:
-      return store
+      return store;
   }
 }

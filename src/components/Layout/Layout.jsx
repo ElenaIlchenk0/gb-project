@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import Header from '../Header/Header'
-import ChatList from '../ChatList/ChatList'
-import MessageField from '../MessageField/MessageField'
-import './Layout.css'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Header from '../Header/Header';
+import ChatList from '../ChatList/ChatList';
+import MessageField from '../MessageField/MessageField';
+import './Layout.css';
 
 class Layout extends Component {
   state = {
@@ -11,42 +11,35 @@ class Layout extends Component {
       this.props.match && this.props.match.params
         ? this.props.match.params.id
         : {},
-  }
+  };
 
-  componentDidUpdate(prevProps, prevState) {
-    // this.timerBot = setTimeout(() => {
-    //   if (
-    //     Object.keys(prevProps.msgs).length <
-    //       Object.keys(this.props.msgs).length &&
-    //     Object.values(this.props.msgs)[
-    //       Object.values(this.props.msgs).length - 1
-    //     ].sender !== 'bot'
-    //   ) {
-    //     this.sendHandler('Я бот!', 'bot')
-    //   }
-    // }, 1000)
-  }
-
-  componentWillUnmount() {
-    // clearTimeout(this.timerBot)
+  componentDidUpdate() {
+    if (
+      !Object.keys(this.state.activeChat).length &&
+      window.location.pathname.match(/\d/)
+    ) {
+      this.setState({
+        activeChat: window.location.pathname.match(/\d/)[0],
+      });
+    }
   }
 
   setActiveChat = (i) => {
     this.setState({
       activeChat: i,
-    })
-  }
+    });
+  };
 
   setActiveChatName = () => {
-    const { activeChat } = this.state
-    const { chats } = this.props
+    const { activeChat } = this.state;
+    const { chats } = this.props;
 
     if (Object.keys(chats).length >= activeChat) {
-      return Object.values(chats)[activeChat - 1].name
+      return Object.values(chats)[activeChat - 1].name;
     } else if (Object.keys(chats).length < activeChat) {
-      return 'Нет такого чата'
-    } else return 'Welcome'
-  }
+      return 'Нет такого чата';
+    } else return 'Welcome';
+  };
 
   render() {
     return (
@@ -67,12 +60,12 @@ class Layout extends Component {
           )}
         </div>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = ({ chatReducer }) => ({
   chats: chatReducer.chatList,
-})
+});
 
-export default connect(mapStateToProps)(Layout)
+export default connect(mapStateToProps)(Layout);
