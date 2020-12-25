@@ -8,7 +8,7 @@ import './Layout.css';
 class Layout extends Component {
   state = {
     activeChat:
-      this.props.match && this.props.match.params
+      this.props.match && this.props.match.params.id
         ? this.props.match.params.id
         : {},
   };

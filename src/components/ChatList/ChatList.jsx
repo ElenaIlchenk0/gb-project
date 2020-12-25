@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChat } from '../../store/actions/chatActions';
+import {
+  addChat,
+  loadChats,
+  loadContacts,
+} from '../../store/actions/chatActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 import List from '@material-ui/core/List';
@@ -38,6 +42,12 @@ export default function SelectedListItem(props) {
 
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(props.activeChat);
+
+  useEffect(() => {
+    const userId = 'u-1';
+    dispatch(loadChats('/api/chats/' + userId));
+    dispatch(loadContacts('/api/contacts/' + userId));
+  }, [dispatch]);
 
   useEffect(() => {
     setSelectedIndex(props.activeChat);
