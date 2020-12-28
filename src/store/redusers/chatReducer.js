@@ -1,18 +1,33 @@
 import update from 'react-addons-update';
 import { SEND_MESSAGE, DEL_MESSAGE } from '../actions/msgActions';
-import { ADD_CHAT } from '../actions/chatActions';
+import {
+  ADD_CHAT,
+  GET_CHATS_SUCCESS,
+  GET_CONTACTS_SUCCESS,
+} from '../actions/chatActions';
 
 const initialStore = {
-  chatList: {
-    1: { name: 'Чат 1', messageList: [1] },
-    2: { name: 'Чат 2', messageList: [2] },
-    3: { name: 'Чат 3', messageList: [3] },
-  },
-  contactList: ['Alexandra', 'Den', 'Filipp'],
+  chatList: {},
+  contactList: [],
+  userId: 'u-1',
 };
 
 export default function chatReducer(store = initialStore, action) {
   switch (action.type) {
+    case GET_CHATS_SUCCESS: {
+      return update(store, {
+        chatList: {
+          $set: action.chats,
+        },
+      });
+    }
+    case GET_CONTACTS_SUCCESS: {
+      return update(store, {
+        contactList: {
+          $set: action.contacts,
+        },
+      });
+    }
     case DEL_MESSAGE: {
       return update(store, {
         chatList: {

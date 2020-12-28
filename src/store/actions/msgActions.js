@@ -1,5 +1,6 @@
 export const SEND_MESSAGE = '@@message/SEND_MESSAGE';
 export const DEL_MESSAGE = '@@message/DEL_MESSAGE';
+export const GET_MSGS_SUCCESS = '@@message/GET_MSGS_SUCCESS';
 
 export const deleteMsg = (id, activeChat) => ({
   type: DEL_MESSAGE,
@@ -37,3 +38,14 @@ const sendNewMessage = (messageId, text, sender, chatId) => ({
   sender,
   chatId,
 });
+
+export const getMsgsSuccess = (msgs) => ({
+  type: GET_MSGS_SUCCESS,
+  msgs,
+});
+
+export const loadMsgs = (url) => (dispatch) => {
+  fetch(url)
+    .then((res) => res.json())
+    .then((msgs) => dispatch(getMsgsSuccess(msgs)));
+};

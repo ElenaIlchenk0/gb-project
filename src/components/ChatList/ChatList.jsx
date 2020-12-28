@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChat } from '../../store/actions/chatActions';
+import {
+  addChat,
+  loadChats,
+  loadContacts,
+} from '../../store/actions/chatActions';
 import { makeStyles } from '@material-ui/core/styles';
 import { push } from 'connected-react-router';
 import List from '@material-ui/core/List';
@@ -40,6 +44,11 @@ export default function SelectedListItem(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(props.activeChat);
 
   useEffect(() => {
+    dispatch(loadChats('/api/chats/' + props.user));
+    dispatch(loadContacts('/api/contacts/' + props.user));
+  }, [dispatch, props]);
+
+  useEffect(() => {
     setSelectedIndex(props.activeChat);
   }, [props.activeChat]);
 
@@ -50,7 +59,7 @@ export default function SelectedListItem(props) {
     [dispatch]
   );
 
-  const handleListItemClick = (index, chatId) => (dispatch) => {
+  const handleListItemClick = (index, chatId) => {
     setSelectedIndex(index);
     props.chatHandler(index);
 
@@ -65,7 +74,7 @@ export default function SelectedListItem(props) {
           className={classes.listItem}
           button
           selected={selectedIndex === id}
-          onClick={() => handleListItemClick(id, `/chat/${id}/`)(dispatch)}
+          onClick={() => handleListItemClick(id, `/chat/${id}/`)}
           key={id}
         >
           <ListItemIcon>

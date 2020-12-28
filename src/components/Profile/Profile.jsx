@@ -6,9 +6,9 @@ import './Profile.css';
 
 const Profile = (props) => {
   const dispatch = useDispatch();
-  const onClickHandler = useCallback((dispatch) => {
+  const onClickHandler = useCallback(() => {
     dispatch(goBack());
-  });
+  }, [dispatch]);
 
   return (
     <div className={`Profile ${props.isOpen ? 'open' : ''}`}>

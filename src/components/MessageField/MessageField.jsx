@@ -1,6 +1,10 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendMessage, deleteMsg } from '../../store/actions/msgActions';
+import {
+  sendMessage,
+  deleteMsg,
+  loadMsgs,
+} from '../../store/actions/msgActions';
 import MessageComponent from '../MessageComponent/MessageComponent';
 import ChatInput from '../ChatInput/ChatInput';
 import './MessageField.css';
@@ -9,6 +13,7 @@ const MessageField = (props) => {
   const dispatch = useDispatch();
   const chats = useSelector((state) => state.chatReducer.chatList);
   const msgs = useSelector((state) => state.msgReducer.msgs);
+
   const fieldRef = useRef(null);
 
   useEffect(() => {
@@ -17,6 +22,10 @@ const MessageField = (props) => {
     }
   });
 
+  useEffect(() => {
+    dispatch(loadMsgs('/api/msgs/' + props.user));
+  }, [dispatch, props]);
+
   const sendHandler = useCallback(
     (text, sender) => {
       const { activeChat } = props;
@@ -24,19 +33,18 @@ const MessageField = (props) => {
 
       dispatch(sendMessage(messageId, text, sender, activeChat));
     },
-    [dispatch, msgs, props.activeChat]
+    [dispatch, msgs, props]
   );
 
   const chatClickHandler = useCallback(
     (id, activeChat) => {
       dispatch(deleteMsg(id, activeChat));
     },
-    [dispatch, chats, msgs, props.activeChat]
+    [dispatch]
   );
 
   const renderMsgs = () => {
     const { activeChat } = props;
-
     return chats[activeChat].messageList.map((messageId, index) => (
       <MessageComponent
         key={index}
