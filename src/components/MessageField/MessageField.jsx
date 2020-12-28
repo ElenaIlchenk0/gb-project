@@ -24,7 +24,7 @@ const MessageField = (props) => {
 
   useEffect(() => {
     dispatch(loadMsgs('/api/msgs/' + props.user));
-  }, [dispatch, props]);
+  }, [dispatch, props.user]);
 
   const sendHandler = useCallback(
     (text, sender) => {
@@ -45,6 +45,7 @@ const MessageField = (props) => {
 
   const renderMsgs = () => {
     const { activeChat } = props;
+
     return chats[activeChat].messageList.map((messageId, index) => (
       <MessageComponent
         key={index}

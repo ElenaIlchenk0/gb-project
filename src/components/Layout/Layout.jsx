@@ -42,6 +42,8 @@ class Layout extends Component {
   };
 
   render() {
+    console.log('layout');
+
     return (
       <div className="Layout">
         <Header

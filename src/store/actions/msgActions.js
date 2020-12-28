@@ -47,5 +47,6 @@ export const getMsgsSuccess = (msgs) => ({
 export const loadMsgs = (url) => (dispatch) => {
   fetch(url)
     .then((res) => res.json())
-    .then((msgs) => dispatch(getMsgsSuccess(msgs)));
+    .then((msgs) => dispatch(getMsgsSuccess(msgs)))
+    .catch((err) => console.log(err));
 };
